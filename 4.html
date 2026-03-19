@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Módulo 4 - Gramática Técnica</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; --accent: #c0392b; --blue: #2980b9; }
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', 'Alef', sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            padding-top: 150px; /* Evita que o conteúdo pule sob o header */
+            color: var(--text); 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Fixo Robusto */
+        header { 
+            background: var(--primary); color: white; padding: 20px; text-align: center; 
+            border-bottom: 5px solid var(--gold); position: fixed; top: 0; width: 100%; 
+            z-index: 1000; height: 140px; 
+        }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        .chancela { font-size: 0.85rem; opacity: 0.9; margin-top: 5px; }
+
+        .container { max-width: 650px; margin: 0 auto; padding: 20px; }
+
+        /* Navegação de Áudio Estável */
+        .audio-nav { 
+            display: flex; gap: 10px; margin-bottom: 25px; background: #fff; padding: 15px; 
+            border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        }
+        .btn-audio { 
+            flex: 1; background: var(--primary); color: white; border: none; padding: 12px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; 
+        }
+
+        .card-aula { 
+            background: white; padding: 30px; border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            border-left: 6px solid var(--primary); 
+        }
+
+        h3 { color: var(--primary); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 30px; text-transform: uppercase; font-size: 1.1rem; }
+        h3:first-child { margin-top: 0; }
+
+        .regra-box { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .hebraico { font-family: 'Alef', sans-serif; font-size: 1.8rem; color: var(--accent); direction: rtl; text-align: right; display: block; }
+        .destaque { color: var(--blue); font-weight: bold; }
+
+        .btn-avancar { 
+            display: block; width: 100%; padding: 20px; background: var(--gold); color: white; 
+            text-align: center; text-decoration: none; border-radius: 12px; font-weight: bold; margin-bottom: 100px; 
+        }
+    </style>
+</head>
+<body>
+
+<div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+
+<header>
+    <h1>TALMID IVRYT</h1>
+    <div class="chancela"><strong>Gilberto Moreira</strong><br>Faculdade Teológica AVANCE | Seminário HAZAQ</div>
+</header>
+
+<div class="container">
+    <div class="audio-nav">
+        <button class="btn-audio" onclick="ouvirTexto()">Ouvir Aula 🔊</button>
+        <button class="btn-audio" style="background:#7f8c8d" onclick="pararAudio()">Parar ⏹️</button>
+    </div>
+
+    <img src="3-img.png" alt="Gramática Hebraica" style="width:100%; border-radius:15px; border:3px solid var(--primary); margin-bottom:20px;">
+
+    <div class="card-aula" id="aula-texto">
+        <h3>1. O Conceito de Shoresh (Raiz)</h3>
+        <p>O Hebraico é uma língua <strong>triliteral</strong>. Quase todas as palavras derivam de uma raiz de três consoantes. Pense nela como o "DNA" da palavra.</p>
+        <div class="regra-box">
+            <span class="hebraico" style="text-align:center;">כ.ת.ב</span>
+            <center><strong>K-T-V</strong> (Escrever)</center>
+        </div>
+        <ul>
+            <li>✍️ <strong>Katav</strong> (Ele escreveu)</li>
+            <li>📖 <strong>Kitav</strong> (Escrita)</li>
+            <li>✉️ <strong>Miktav</strong> (Carta)</li>
+        </ul>
+
+        <h3>2. Nequdot e o Kamatz Qatan</h3>
+        <p>As vogais (Nequdot) determinam a exegese. Cuidado com o <span class="destaque">Kamatz Qatan</span>: ele assume som de <strong>"O"</strong> em sílabas fechadas e não tônicas.</p>
+        <div class="regra-box">
+            <span class="hebraico">חָכְמָה</span>
+            <strong>Exemplo:</strong> <em>Choch-mah</em> (Sabedoria). O primeiro Kamatz soa como "O".
+        </div>
+
+        <h3>3. Alternância do Shvá ( ְ )</h3>
+        <p>No início de palavras, o Shvá geralmente vale <strong>"E"</strong>. A partir da segunda sílaba, ele pode ser mudo (ancorado).</p>
+        <div class="regra-box">
+            1. No início: <span class="hebraico">בְּרֵאשִׁית</span> (B<strong>e</strong>-reshit) - Som de E.<br>
+            2. Ancorado: <span class="hebraico">מִדְבָּר</span> (Mid-bar) - O Shvá no Dalet apenas fecha a sílaba.
+        </div>
+
+        <h3>4. A Regra do Dagesh</h3>
+        <p>O ponto (Dagesh) nas letras <strong>Bet, Guimel, Dalet, Kaf, Pe e Tav</strong> altera a fonética de aspirada para oclusiva ("dura").</p>
+        <div class="regra-box">
+            <span class="hebraico">בּ vs ב | גּ vs ג | דּ vs ד</span>
+            Sem o dagesh, o som suaviza conforme a tradição de leitura.
+        </div>
+
+        <h3>5. Morfologia: Gênero e Número</h3>
+        <div class="regra-box">
+            <li><span class="hebraico">סוּס</span> (Sus) - Cavalo (Masc.)</li>
+            <li><span class="hebraico">סוּסָה</span> (Susah) - Égua (Fem.)</li>
+            <li><span class="hebraico">סוּסִים</span> (Susim) - Cavalos (Plural)</li>
+            <li><span class="hebraico">יָדַיִם</span> (Yadayim) - Duas mãos (<span class="destaque">DUAL</span>)</li>
+        </div>
+
+        <h3>6. Prefixos Inseparáveis</h3>
+        <p>O Artigo <span class="destaque">He (ה)</span> e as preposições <span class="destaque">Be (ב), Le (ל), Ke (כ)</span> são grudados na palavra.</p>
+
+        <h3>7. Sintaxe Bíblica</h3>
+        <p>Ordem padrão: <strong>Verbo + Sujeito + Objeto</strong>. A ação precede o autor.</p>
+        <span class="hebraico" style="text-align:center;">בָּרָא אֱלֹהִים אֵת הָאָרֶץ</span>
+    </div>
+
+    <a href="5.html" class="btn-avancar">Avançar para Verbos</a>
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+    let synth = window.speechSynthesis;
+    let utter = null;
+
+    function ouvirTexto() {
+        if(synth.speaking) synth.cancel();
+        utter = new SpeechSynthesisUtterance(document.getElementById('aula-texto').innerText);
+        utter.lang = 'pt-BR';
+        utter.rate = 0.9;
+        synth.speak(utter);
+    }
+    function pararAudio() { synth.cancel(); }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Módulo 3 - O Tetragrama Sagrado</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; --sacred: #e74c3c; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Alef', sans-serif; background: var(--bg); margin: 0; padding-top: 140px; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); position: fixed; top: 0; width: 100%; z-index: 1000; height: 130px; }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+        .chancela { font-size: 0.85rem; opacity: 0.9; margin-top: 5px; }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .btn-voltar { display: inline-block; margin-bottom: 15px; color: #2980b9; text-decoration: none; font-weight: bold; }
+
+        .audio-nav { display: flex; gap: 10px; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 140px; z-index: 900; }
+        .btn-audio { flex: 1; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        .capa-modulo { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 3px solid var(--primary); background: #eee; min-height: 200px; }
+
+        .texto-conteudo { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: justify; }
+        h3 { color: var(--primary); border-bottom: 2px solid var(--gold); padding-bottom: 5px; margin-top: 0; }
+        
+        /* Estilo para Exemplos Bíblicos */
+        .exemplo-box { background: #fdf2f2; border-left: 5px solid var(--sacred); padding: 15px; margin: 20px 0; border-radius: 8px; font-family: 'Alef', sans-serif; }
+        .hebraico-destaque { font-size: 1.8rem; color: var(--sacred); display: block; text-align: right; margin-bottom: 10px; }
+        .vermelho { color: var(--sacred); font-weight: bold; }
+
+        .btn-avancar { display: block; width: 100%; padding: 20px; background: var(--gold); color: white; text-align: center; text-decoration: none; border-radius: 12px; font-weight: bold; margin: 30px 0 60px; }
+    </style>
+</head>
+<body>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+</div>
+
+<header>
+    <h1>TALMID IVRYT</h1>
+    <div class="chancela">
+        <strong>Gilberto Moreira</strong><br>
+        Faculdade Teológica AVANCE | Seminário HAZAQ
+    </div>
+</header>
+
+<div class="container">
+    <a href="1.html" class="btn-voltar">← Voltar ao Catálogo</a>
+
+    <div class="audio-nav">
+        <button class="btn-audio" onclick="ouvirTexto()">Ouvir Aula 🔊</button>
+        <button class="btn-audio" style="background:#7f8c8d" onclick="pararAudio()">Parar ⏹️</button>
+    </div>
+
+    <img src="2-img.png" alt="O Tetragrama Sagrado" class="capa-modulo">
+
+    <div class="texto-conteudo" id="aula-texto">
+        <h3>A Regra do Tetragrama Sagrado</h3>
+        <p>As quatro letras <span class="vermelho">יהוה</span> (Yod, He, Vav, He) formam o que conhecemos como o Tetragrama Sagrado. É fundamental compreender que estas letras são <strong>impronunciáveis</strong>. No Hebraico, pronunciar este conjunto de letras é considerado um ato de profundo desrespeito, profanação e descaso ao Sagrado.</p>
+        
+        <p>Assim como a tradição judaica preserva há milênios, o <strong>Talmid</strong> (Aprendiz de Hebraico) deve substituir o Tetragrama na leitura, na pronúncia e na transliteração por termos como: <span class="vermelho">ADONAY</span> (Meu Senhor), <span class="vermelho">HASHEM</span> (O Nome), Altíssimo ou Senhor.</p>
+
+        <hr>
+
+        <h4>Exemplos Práticos de Substituição:</h4>
+
+        <div class="exemplo-box">
+            <span class="hebraico-destaque">שְׁמַע יִשְׂרָאֵל <span class="vermelho">יהוה</span> אֱלֹהֵינוּ <span class="vermelho">יהוה</span> אֶחָד</span>
+            <strong>Transliteração:</strong> Shemá Yisra'el <span class="vermelho">ADONAY</span> Eloheynu <span class="vermelho">ADONAY</span> Echad.<br>
+            <strong>Tradução:</strong> Ouve, Israel, o <span class="vermelho">SENHOR</span> nosso Deus é o único <span class="vermelho">SENHOR</span>.
+        </div>
+
+        <div class="exemplo-box">
+            <span class="hebraico-destaque"><span class="vermelho">יהוה</span> רֹעִי לֹא אֶחְסָר</span>
+            <strong>Transliteração:</strong> <span class="vermelho">ADONAY</span> ro'i lo echsar.<br>
+            <strong>Tradução:</strong> O <span class="vermelho">SENHOR</span> é o meu pastor, nada me faltará.
+        </div>
+
+        <div class="exemplo-box">
+            <span class="hebraico-destaque">הוֹדוּ לַ<span class="vermelho">יהוה</span> כִּי־טוֹב</span>
+            <strong>Transliteração:</strong> Hodu l'<span class="vermelho">ADONAY</span> ki-tov.<br>
+            <strong>Tradução:</strong> Louvai ao <span class="vermelho">SENHOR</span>, porque Ele é bom.
+        </div>
+
+        <hr>
+
+        <h4>A Revelação na Sarça Ardente</h4>
+        <p>É um erro comum pensar que o Tetragrama é o "nome" próprio de Deus como temos nomes humanos. Na verdade, ele funciona como uma <strong>nomenclatura abreviada</strong> ou uma espécie de "sigla" teológica da expressão máxima revelada a Moisés em Êxodo 3:14:</p>
+        
+        <p style="text-align: center; font-size: 1.3rem; font-weight: bold;">
+            <span class="vermelho">אֶהְיֶה אֲשֶׁר אֶהְיֶה</span><br>
+            (Ehyeh Asher Ehyeh)
+        </p>
+
+        <p>A tradução mais precisa desta expressão é: <strong>"EU SEREI O QUE SEREI"</strong>. O Tetragrama condensa em si os tempos verbais do verbo "ser/estar" (Haya, Hoveh, Yihyeh - Foi, É, Será), indicando a Eternidade e a Autoexistência daquele que não pode ser limitado por um nome, mas definido por Sua própria Existência Absoluta.</p>
+    </div>
+
+    <a href="4.html" class="btn-avancar">Avançar</a>
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+    let synth = window.speechSynthesis;
+    let currentUtterance = null;
+
+    function ouvirTexto() {
+        pararAudio();
+        const texto = document.getElementById('aula-texto').innerText;
+        currentUtterance = new SpeechSynthesisUtterance(texto);
+        currentUtterance.lang = 'pt-BR';
+        currentUtterance.rate = 0.9;
+        synth.speak(currentUtterance);
+    }
+
+    function pararAudio() { if (synth.speaking) synth.cancel(); }
+</script>
+
+</body>
+</html>

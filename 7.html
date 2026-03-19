@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Módulo 7 - Diálogos</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', 'Alef', sans-serif; background: var(--bg); margin: 0; padding-top: 150px; color: var(--text); }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); position: fixed; top: 0; width: 100%; z-index: 1000; height: 140px; }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        .chancela { font-size: 0.85rem; opacity: 0.9; margin-top: 5px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
+        .category-title { background: var(--primary); color: white; padding: 12px; border-radius: 8px; margin: 30px 0 15px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; border-left: 5px solid var(--gold); }
+        .chat-bubble { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-right: 5px solid var(--gold); margin-bottom: 15px; cursor: pointer; transition: 0.3s; display: block; width: 100%; }
+        .heb-phrase { font-size: 1.8rem; color: var(--primary); font-weight: bold; direction: rtl; display: block; text-align: right; }
+        .details { display: none; margin-top: 15px; border-top: 2px dashed #eee; padding-top: 15px; }
+        .chat-bubble.active .details { display: block; }
+        .translit { color: #8e44ad; font-style: italic; font-weight: bold; font-size: 1rem; display: block; margin-bottom: 5px; }
+        .trad { color: #2980b9; font-weight: bold; font-size: 1.1rem; }
+        .btn-avancar { display: block; width: 100%; padding: 20px; background: var(--primary); color: white; text-align: center; text-decoration: none; border-radius: 12px; font-weight: bold; margin: 40px 0 100px; border-bottom: 4px solid #000; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>TALMID IVRYT</h1>
+    <div class="chancela"><strong>Gilberto Moreira</strong><br>Faculdade Teológica AVANCE | Seminário HAZAQ</div>
+</header>
+
+<div class="container">
+    <div id="lista-dialogos"></div>
+    <a href="8.html" class="btn-avancar">Ir para Módulo 8 ➔</a>
+</div>
+
+<script>
+    const dialogos = [
+        {cat: "Saudações", itens: [
+            {h: "שָׁלוֹם", t: "Shalom", p: "Olá / Paz"},
+            {h: "בּוֹקֶר טוֹב", t: "Boker Tov", p: "Bom dia (entrada)"},
+            {h: "צָהֳרַיִם טוֹבִים", t: "Tzohorayim Tovim", p: "Boa tarde"},
+            {h: "עֶרֶב טוֹב", t: "Erev Tov", p: "Boa noite (entrada)"},
+            {h: "לַיְלָה טוֹב", t: "Layla Tov", p: "Boa noite (saída)"},
+            {h: "סְלִיחָה", t: "Slicha", p: "Com licença / Perdão"},
+            {h: "תּוֹדָה", t: "Toda", p: "Obrigado/a"},
+            {h: "בְּבַקָּשָׁה", t: "Bevakasha", p: "Por favor / Por nada"},
+            {h: "כֵּן", t: "Ken", p: "Sim"},
+            {h: "עַכְשָׁיו לֹא", t: "Achshav lo", p: "Agora não"}
+        ]},
+        {cat: "Perguntas e Cotidiano", itens: [
+            {h: "מָה הַשָּׁעָה?", t: "Mah hasha'ah?", p: "Que horas são?"},
+            {h: "הַאִם יוֹרֵד גֶּשֶׁם שָׁם?", t: "Ha'im yored geshem sham?", p: "Aí está chovendo?"},
+            {h: "מָה הַיּוֹם?", t: "Mah hayom?", p: "Que dia é hoje?"},
+            {h: "אֲנִי יָכוֹל לָבוֹא מָחָר", t: "Ani yachol lavo machar", p: "Posso ir amanhã."},
+            {h: "אֵיפֹה אַתָּה גָּר?", t: "Eifo atah gar?", p: "Onde você mora?"},
+            {h: "מָה הַצֶּבַע שֶׁל הַבַּיִת שֶׁלְּךָ?", t: "Mah hatzeva shel habayit shelcha?", p: "Que cor é a tua casa?"},
+            {h: "בַּמֶּה אַתָּה עוֹבֵד?", t: "Bameh atah oved?", p: "Você trabalha com o quê?"},
+            {h: "הַאִם אַתָּה לוֹמֵד?", t: "Ha'im atah lomed?", p: "Você estuda?"},
+            {h: "מָה שֵׁם הָעִיר שֶׁלְּךָ?", t: "Mah shem ha'ir shelcha?", p: "Qual o nome da tua cidade?"},
+            {h: "כַּמָּה זֶה עוֹלֶה?", t: "Kamah zeh oleh?", p: "Quanto custa isso?"}
+        ]},
+        {cat: "Fé e Identidade", itens: [
+            {h: "הַאִם אַתָּה מַאֲמִין בֵּאלֹהִים?", t: "Ha'im atah ma'amin b'Elohim?", p: "Você crê em Deus?"},
+            {h: "יֵשׁוּעַ מְלַוֶּה אוֹתךָ!", t: "Yeshua melaveh otcha!", p: "Jesus te acompanha!"},
+            {h: "אֵיזוֹ בְּרָכָה!", t: "Eizo bracha!", p: "Que bênção!"},
+            {h: "שְׁמִי גִּלְבֶּרְטוֹ, מָה שִׁמְךָ?", t: "Shmi Gilberto, mah shimcha?", p: "Meu nome é Gilberto, qual o teu?"},
+            {h: "אֲנִי לוֹמֵד", t: "Ani lomed", p: "Estou aprendendo."},
+            {h: "כְּמוֹ שֶׁכָּתוּב בִּדְבַר הָאֱלֹהִים", t: "Kmo shekatuv bidvar ha'Elohim", p: "Como diz na Palavra de Deus."},
+            {h: "יֵשׁוּעַ הוּא הַמֶּלֶךְ וְהָאָדוֹן שֶׁלָּנוּ", t: "Yeshua hu haMelech vehaAdon shelanu", p: "Jesus é o nosso Rei e Senhor."}
+        ]},
+        {cat: "Frases Diversas", itens: [
+            {h: "הַשָּׁנָה אֲנִי אֶסַּע", t: "Hashanah ani essa", p: "Esse ano vou viajar."},
+            {h: "כְּבָר מְאוּחָר", t: "Kvar me'uchar", p: "Já está tarde."},
+            {h: "טוֹב שֶׁבָּאתָ", t: "Tov shebata", p: "Ainda bem que você veio."},
+            {h: "לֹא הֵבַנְתִּי", t: "Lo hevanti", p: "Não entendi / Não compreendo."},
+            {h: "אֲנִי לֹא מְדַבֵּר אֶת הַשָּׂפָה הַזֹּאת", t: "Ani lo medaber et hasafah hazot", p: "Não falo esse idioma."},
+            {h: "אֲנַחְנוּ צְרִיכִים לִהְיוֹת סַבְלָנִים", t: "Anachnu tzrichim lihyot savlanim", p: "Temos que ter paciência."},
+            {h: "הַצְלָחָה רַבָּה לְךָ וּלְמִשְׁפַּחְתְּךָ", t: "Hatzlacha rabah lecha u'lemishpachtcha", p: "Muito sucesso a você e sua família."},
+            {h: "הַאִם יֵשׁ לְךָ יְלָדִים?", t: "Ha'im yesh lecha yeladim?", p: "Você tem filhos?"}
+        ]}
+    ];
+
+    const listDiv = document.getElementById('lista-dialogos');
+    const narrador = window.speechSynthesis;
+
+    function carregarPagina() {
+        dialogos.forEach(secao => {
+            const title = document.createElement('div');
+            title.className = 'category-title';
+            title.innerText = secao.cat;
+            listDiv.appendChild(title);
+            secao.itens.forEach(item => {
+                const bubble = document.createElement('div');
+                bubble.className = 'chat-bubble';
+                bubble.innerHTML = `<span class="heb-phrase">${item.h}</span><div class="details"><span class="translit">${item.t}</span><span class="trad">${item.p}</span></div>`;
+                bubble.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    falar(item.h);
+                });
+                listDiv.appendChild(bubble);
+            });
+        });
+    }
+
+    function falar(texto) {
+        narrador.cancel();
+        const msg = new SpeechSynthesisUtterance(texto);
+        msg.lang = 'he-IL';
+        msg.rate = 0.8;
+        narrador.speak(msg);
+    }
+
+    carregarPagina();
+</script>
+</body>
+</html>

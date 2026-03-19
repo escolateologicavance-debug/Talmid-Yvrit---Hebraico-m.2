@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Talmid Ivryt - Login</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow: hidden; }
+        
+        .login-container { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; 
+        }
+
+        /* Imagem ocupando 80% da altura */
+        .capa-img { 
+            width: 90%; max-width: 500px; height: 70vh; 
+            background: url('logo-512.png') no-repeat center center; 
+            background-size: contain; margin-bottom: 20px;
+        }
+
+        .form-login { 
+            display: flex; flex-direction: column; gap: 10px; width: 80%; max-width: 300px; 
+        }
+
+        input { 
+            padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; text-align: center;
+        }
+
+        .btn-acessar { 
+            padding: 15px; background: var(--primary); color: white; border: none; 
+            border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem;
+        }
+        
+        .error-msg { color: red; font-size: 0.8rem; text-align: center; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="capa-img"></div>
+
+    <div class="form-login">
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
+        <div id="msg" class="error-msg">Credenciais incorretas</div>
+        <button class="btn-acessar" onclick="autenticar()">ACESSAR</button>
+    </div>
+</div>
+
+<script>
+    // Registro do Service Worker para Instalação (PWA)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log("PWA: Pronto para instalar"));
+    }
+
+    function autenticar() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+        const msg = document.getElementById('msg');
+
+        // Lógica de acesso solicitada
+        if(u === 'cursotalmid' && p === 'cursotalmid') {
+            window.location.href = '1.html';
+        } else {
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 2000);
+        }
+    }
+</script>
+
+</body>
+</html>

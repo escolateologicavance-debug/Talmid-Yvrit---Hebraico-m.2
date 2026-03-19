@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Módulo 5 - Verbos (Léxico Sagrado)</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; --accent: #c0392b; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Alef', sans-serif; background: var(--bg); margin: 0; padding-top: 150px; color: var(--text); overflow-x: hidden; }
+
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); position: fixed; top: 0; width: 100%; z-index: 1000; height: 140px; }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        .chancela { font-size: 0.85rem; opacity: 0.9; margin-top: 5px; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+        /* Introdução Teológica */
+        .intro-verbos { background: white; padding: 25px; border-radius: 15px; border-left: 6px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* Controles de Áudio */
+        .audio-nav { display: flex; gap: 10px; margin-bottom: 25px; background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .btn-audio { flex: 1; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+        /* Grid de Verbos Animados */
+        .verb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        
+        /* Card Interativo */
+        .verb-card { 
+            background: white; height: 160px; border-radius: 12px; position: relative; 
+            perspective: 1000px; cursor: pointer; transition: transform 0.3s;
+        }
+        .verb-card-inner { 
+            position: relative; width: 100%; height: 100%; text-align: center; 
+            transition: transform 0.6s; transform-style: preserve-3d; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 12px;
+        }
+        .verb-card.flipped .verb-card-inner { transform: rotateY(180deg); }
+        
+        .verb-front, .verb-back { 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; border-radius: 12px;
+        }
+        .verb-front { background: white; color: var(--accent); }
+        .verb-front .original { font-size: 2.2rem; font-weight: bold; margin-bottom: 5px; }
+        .verb-back { background: var(--primary); color: white; transform: rotateY(180deg); }
+        .verb-back .translit { font-style: italic; color: var(--gold); font-size: 1rem; }
+        .verb-back .traducao { font-weight: bold; font-size: 1.1rem; margin-top: 5px; }
+
+        .btn-avancar { display: block; width: 100%; padding: 20px; background: var(--gold); color: white; text-align: center; text-decoration: none; border-radius: 12px; font-weight: bold; margin-bottom: 100px; }
+    </style>
+</head>
+<body>
+
+<div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+
+<header>
+    <h1>TALMID IVRYT</h1>
+    <div class="chancela"><strong>Gilberto Moreira</strong><br>Faculdade Teológica AVANCE | Seminário HAZAQ</div>
+</header>
+
+<div class="container">
+    <div class="audio-nav">
+        <button class="btn-audio" onclick="ouvirIntroducao()">Ouvir Introdução 🔊</button>
+        <button class="btn-audio" style="background:#7f8c8d" onclick="pararAudio()">Parar ⏹️</button>
+    </div>
+
+    <div class="intro-verbos" id="texto-intro">
+        <h3>O Sistema Verbal: O Motor da Revelação</h3>
+        <p>No Hebraico, o verbo não é apenas uma ação; é a manifestação da existência. A maioria dos verbos bíblicos está na forma <strong>Qal</strong> (Simples/Leve). Dominar o léxico verbal é a chave para ler os Profetas e a Torá sem depender de filtros de tradução. Toque em cada card abaixo para revelar o mistério de sua tradução.</p>
+    </div>
+
+    <div class="verb-grid" id="verb-container">
+        </div>
+
+    <a href="6.html" class="btn-avancar">Avançar para Números</a>
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+
+    // Lista de 100 Verbos Frequentes (Amostra para o PWA)
+    const verbos = [
+        {o: "אָהַב", tr: "Ahav", d: "Amar"}, {o: "אָמַר", tr: "Amar", d: "Dizer"}, {o: "בּוֹא", tr: "Bo", d: "Vir/Entrar"},
+        {o: "בָּנָה", tr: "Banah", d: "Edificar"}, {o: "בָּרָא", tr: "Bara", d: "Criar"}, {o: "דָּבָר", tr: "Davar", d: "Falar"},
+        {o: "הָיָה", tr: "Hayah", d: "Ser/Estar"}, {o: "הָלַךְ", tr: "Halach", d: "Andar/Ir"}, {o: "זָכַר", tr: "Zachar", d: "Lembrar"},
+        {o: "חָיָה", tr: "Chayah", d: "Viver"}, {o: "יָדַע", tr: "Yada", d: "Saber/Conhecer"}, {o: "יָלַד", tr: "Yalad", d: "Gerar"},
+        {o: "יָצָא", tr: "Yatza", d: "Sair"}, {o: "יָרַד", tr: "Yarad", d: "Descer"}, {o: "יָרַשׁ", tr: "Yarash", d: "Herdar"},
+        {o: "יָשַׁב", tr: "Yashav", d: "Habitar/Sentar"}, {o: "כָּתַב", tr: "Katav", d: "Escrever"}, {o: "מוּת", tr: "Mut", d: "Morrer"},
+        {o: "נָתַן", tr: "Natan", d: "Dar"}, {o: "עָשָׂה", tr: "Asah", d: "Fazer"}, {o: "קָרָא", tr: "Qara", d: "Chamar/Ler"},
+        {o: "רָאָה", tr: "Ra'ah", d: "Ver"}, {o: "שָׁמַע", tr: "Shema", d: "Ouvir"}, {o: "שָׁמַר", tr: "Shamar", d: "Guardar"},
+        {o: "אָכַל", tr: "Achal", d: "Comer"}, {o: "מָצָא", tr: "Matza", d: "Achar"}, {o: "נָפַל", tr: "Nafal", d: "Cair"},
+        {o: "עָלָה", tr: "Alah", d: "Subir"}, {o: "עָמַד", tr: "Amad", d: "Estar em pé"}, {o: "פָּקַד", tr: "Paqad", d: "Visitar"},
+        {o: "שָׁלַח", tr: "Shalach", d: "Enviar"}, {o: "שָׁתָה", tr: "Shatah", d: "Beber"}, {o: "בָּטַח", tr: "Batach", d: "Confiar"},
+        {o: "גָּדַל", tr: "Gadal", d: "Crescer"}, {o: "דָּרַשׁ", tr: "Darash", d: "Buscar"}, {o: "הָלַל", tr: "Halal", d: "Louvar"},
+        {o: "חָטָא", tr: "Chata", d: "Pecar"}, {o: "חָנָה", tr: "Chanah", d: "Acampar"}, {o: "חָפֵץ", tr: "Chafetz", d: "Desejar"},
+        {o: "כָּרַת", tr: "Karat", d: "Cortar/Aliança"}, {o: "לָכַד", tr: "Lachad", d: "Capturar"}, {o: "מָלַךְ", tr: "Malach", d: "Reinar"},
+        {o: "סָגַר", tr: "Sagar", d: "Fechar"}, {o: "עָבַד", tr: "Avad", d: "Trabalhar/Servir"}, {o: "עָבַר", tr: "Avar", d: "Passar/Atravessar"},
+        {o: "עָזַב", tr: "Azav", d: "Abandonar"}, {o: "פָּלַל", tr: "Palal", d: "Orar"}, {o: "צָחַק", tr: "Tzachaq", d: "Rir"},
+        {o: "קָבַץ", tr: "Qabatz", d: "Reunir"}, {o: "קָדַשׁ", tr: "Qadash", d: "Santificar"}, {o: "שָׁבַר", tr: "Shavar", d: "Quebrar"},
+        {o: "שָׁפַט", tr: "Shafat", d: "Julgar"}, {o: "תָּפַשׂ", tr: "Tafas", d: "Segurar"}, {o: "בָּחַר", tr: "Bachar", d: "Escolher"},
+        {o: "בָּרַךְ", tr: "Barach", d: "Abençoar"}, {o: "גָּאַל", tr: "Ga'al", d: "Remir"}, {o: "דָּבַק", tr: "Davaq", d: "Apegar-se"},
+        {o: "הָרַג", tr: "Harag", d: "Matar"}, {o: "חָמַל", tr: "Chamal", d: "Poupar"}, {o: "טָהֵר", tr: "Taher", d: "Ser limpo"},
+        {o: "יָעַץ", tr: "Ya'atz", d: "Aconselhar"}, {o: "כִּפֶּר", tr: "Kiper", d: "Expiar"}, {o: "לָחַם", tr: "Lacham", d: "Lutar"},
+        {o: "מָשַׁח", tr: "Mashach", d: "Ungir"}, {o: "נָחַם", tr: "Nacham", d: "Arrepender-se"}, {o: "סָלַח", tr: "Salach", d: "Perdoar"},
+        {o: "עָנָה", tr: "Anah", d: "Responder"}, {o: "פָּדָה", tr: "Padah", d: "Resgatar"}, {o: "רָחַץ", tr: "Rachatz", d: "Lavar"},
+        {o: "שָׁכַן", tr: "Shachan", d: "Habitar"}, {o: "תָּקַע", tr: "Taqa", d: "Tocar/Soprar"}, {o: "גָּנַב", tr: "Ganav", d: "Roubar"},
+        {o: "אָסַף", tr: "Asaf", d: "Colher/Ajuntar"}, {o: "לָמַד", tr: "Lamad", d: "Aprender"}, {o: "מָכַר", tr: "Machar", d: "Vender"},
+        {o: "נָטַע", tr: "Nata", d: "Plantar"}, {o: "סָפַר", tr: "Safar", d: "Contar"}, {o: "עָזַר", tr: "Azar", d: "Ajudar"},
+        {o: "קָנָה", tr: "Qanah", d: "Comprar"}, {o: "רָכַב", tr: "Rachav", d: "Cavalgar"}, {o: "שָׁאַל", tr: "Sha'al", d: "Pedir"},
+        {o: "שָׁכַח", tr: "Shachach", d: "Esquecer"}, {o: "לָקַח", tr: "Laqach", d: "Tomar/Pegar"}, {o: "נָסַע", tr: "Nasa", d: "Partir/Viajar"},
+        {o: "רָדַף", tr: "Radaf", d: "Perseguir"}, {o: "שָׂנֵא", tr: "Sane", d: "Odiar"}, {o: "אָסַר", tr: "Asar", d: "Amarrar"},
+        {o: "בָּעַר", tr: "Ba'ar", d: "Queimar"}, {o: "זָעַק", tr: "Zaaq", d: "Gritar"}, {o: "חָלַל", tr: "Chalal", d: "Profanar"},
+        {o: "טָעַם", tr: "Ta'am", d: "Provar"}, {o: "יָצַק", tr: "Yatzaq", d: "Derramar"}, {o: "לָבַשׁ", tr: "Lavash", d: "Vestir"},
+        {o: "נָגַשׁ", tr: "Nagash", d: "Aproximar"}, {o: "סָבַב", tr: "Savav", d: "Rodear"}, {o: "רָעָה", tr: "Ra'ah", d: "Apascentar"}
+    ];
+
+    const container = document.getElementById('verb-container');
+
+    verbos.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'verb-card';
+        card.innerHTML = `
+            <div class="verb-card-inner">
+                <div class="verb-front"><span class="original">${v.o}</span></div>
+                <div class="verb-back">
+                    <span class="translit">${v.tr}</span>
+                    <span class="traducao">${v.d}</span>
+                </div>
+            </div>`;
+        card.onclick = () => card.classList.toggle('flipped');
+        container.appendChild(card);
+    });
+
+    let synth = window.speechSynthesis;
+    function ouvirIntroducao() {
+        if(synth.speaking) synth.cancel();
+        const utter = new SpeechSynthesisUtterance(document.getElementById('texto-intro').innerText);
+        utter.lang = 'pt-BR';
+        synth.speak(utter);
+    }
+    function pararAudio() { synth.cancel(); }
+</script>
+
+</body>
+</html>

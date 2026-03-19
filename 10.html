@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Créditos - TalmidYvrit</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #0a0e14; --text: #ecf0f1; }
+        body { font-family: 'Alef', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; overflow-x: hidden; text-align: center; }
+
+        /* Efeito de Rolagem de Créditos de Cinema */
+        .credits-container { max-width: 800px; margin: 0 auto; padding-top: 50px; }
+        
+        h1 { color: var(--gold); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 50px; }
+        
+        .section { margin-bottom: 40px; }
+        .role { color: var(--gold); font-weight: bold; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; }
+        .name { font-size: 1.5rem; margin-top: 5px; margin-bottom: 20px; }
+
+        hr { border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 40px 0; }
+
+        /* Galeria de Imagens Clicáveis */
+        .gallery-title { color: var(--gold); margin-bottom: 20px; font-size: 1.8rem; }
+        .image-links { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        
+        .img-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gold);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            width: 100%;
+            max-width: 400px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: block;
+        }
+        .img-link:hover { background: var(--gold); color: black; transform: scale(1.05); }
+
+        .footer-logo { margin-top: 60px; font-size: 1.2rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="credits-container">
+    <h1>Créditos</h1>
+
+    <div class="section">
+        <div class="role">Idealização e Conteúdo</div>
+        <div class="name">Gilberto Moreira</div>
+    </div>
+
+    <div class="section">
+        <div class="role">Instituição</div>
+        <div class="name">Faculdade AVANCE</div>
+    </div>
+
+    <div class="section">
+        <div class="role">Metodologia Educacional</div>
+        <div class="name">Método SINCRO</div>
+    </div>
+
+    <hr>
+
+    <h2 class="gallery-title">Galeria de Arte Talmid</h2>
+    <p style="margin-bottom: 25px; opacity: 0.8;">Clique para visualizar as artes do curso:</p>
+
+    <div class="image-links">
+
+        <a href="3-img.png" target="_blank" class="img-link">🖼️ Arte 03: Gematria e Mistério</a>
+        <a href="4-img.png" target="_blank" class="img-link">🖼️ Arte 04: O Verbo em Ação</a>
+        <a href="6-img.png" target="_blank" class="img-link">🖼️ Arte 06: A Voz dos Profetas</a>
+        <a href="7-img.png" target="_blank" class="img-link">🖼️ Arte 07: Frases de Poder</a>
+        <a href="8-img.png" target="_blank" class="img-link">🖼️ Arte 08: O Selo do Talmid</a>
+    </div>
+
+    <hr>
+
+    <div class="footer-logo">
+        Mato Grosso, Brasil<br>
+        2026 &copy; TalmidYvrit - Todos os direitos reservados.
+    </div>
+    
+    <div style="margin-top: 50px;">
+        <a href="index.html" style="color: var(--gold); text-decoration: none;">← Voltar ao Início</a>
+    </div>
+</div>
+
+</body>
+</html>

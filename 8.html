@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Bangers&display=swap" rel="stylesheet">
+    <title>Módulo 8 - O Desafio dos 40</title>
+    <style>
+        :root { --neon-blue: #00f3ff; --gold: #f39c12; --dark: #0a0e14; --success: #2ecc71; --error: #e74c3c; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Alef', sans-serif; background: var(--dark); color: white; margin: 0; overflow-x: hidden; text-align: center; }
+        header { background: rgba(26, 42, 58, 0.9); padding: 15px; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .stats { display: flex; justify-content: space-around; font-weight: bold; color: var(--gold); font-size: 1.1rem; }
+        .game-container { max-width: 600px; margin: 20px auto; padding: 20px; }
+        .mission-card { background: linear-gradient(145deg, #16213e, #0f3460); border-radius: 20px; padding: 30px; border: 2px solid var(--neon-blue); box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); margin-bottom: 20px; min-height: 350px; display: flex; flex-direction: column; justify-content: center; transition: 0.3s; }
+        .pergunta-texto { font-size: 1.4rem; margin-bottom: 20px; line-height: 1.5; font-weight: bold; }
+        .figura-associativa { font-size: 4rem; margin: 10px 0; display: block; filter: drop-shadow(0 0 10px white); }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .opt { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-blue); padding: 18px 10px; border-radius: 12px; color: white; cursor: pointer; transition: 0.2s; font-weight: bold; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+        .opt:active { transform: scale(0.95); background: var(--neon-blue); color: black; }
+        .shake { animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        #feedback { font-weight: bold; margin-top: 20px; font-size: 1.2rem; height: 30px; text-transform: uppercase; }
+        .btn-proximo { background: var(--gold); color: black; border: none; padding: 18px 40px; border-radius: 50px; font-family: 'Bangers', cursive; font-size: 1.6rem; margin-top: 20px; display: none; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #b37400; }
+        #final-screen { display: none; padding: 40px 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="stats">
+        <span>QUESTÃO: <span id="current-q">1</span>/40</span>
+        <span>SCORE: <span id="score">0</span></span>
+    </div>
+</header>
+
+<div class="game-container">
+    <div id="game-ui">
+        <div class="mission-card" id="card">
+            <span class="figura-associativa" id="icon">🚀</span>
+            <div class="pergunta-texto" id="pergunta">Carregando desafio...</div>
+            <div class="options-grid" id="options"></div>
+            <div id="feedback"></div>
+        </div>
+        <button class="btn-proximo" id="btn-next" onclick="loadNext()">PRÓXIMO NÍVEL ➔</button>
+    </div>
+
+    <div id="final-screen">
+        <h1 style="color:var(--gold); font-family: 'Bangers'; font-size: 4.5rem; margin-bottom:0;">MEMORIAL COMPLETO!</h1>
+        <p style="font-size: 1.5rem; margin-top:10px;">Você dominou os 40 portais do conhecimento.</p>
+        <div style="font-size: 3rem; margin: 30px 0;">🏆</div>
+        <a href="9.html" style="text-decoration: none; display: block; padding: 25px; background: var(--success); border-radius: 15px; color: white; font-weight: bold; font-size: 1.3rem; border-bottom: 5px solid #1e8449;">IR PARA O MÓDULO 9</a>
+    </div>
+</div>
+
+<script>
+    const bancoDeDados = [
+        // 1-10 (Originais e Revisadas)
+        { q: "Valor da Gematria de 'HAI' (Vida - חי)?", i: "🧬", o: ["18", "10", "22", "8"], a: 0 },
+        { q: "Qual verbo significa 'Ele Reina'?", i: "👑", o: ["Lomed", "Molech", "Oved", "Gar"], a: 1 },
+        { q: "Número 3 (Masc): Como se diz?", i: "🔢", o: ["Shalosh", "Shlossah", "Arba", "Echad"], a: 1 },
+        { q: "Qual NÃO é saudação?", i: "🚫", o: ["Boker Tov", "Shalom", "Lechem", "Erev Tov"], a: 2 },
+        { q: "'Jesus é o nosso Rei' em Hebraico:", i: "⛪", o: ["Yeshua Melech", "Yeshua hu haMelech", "Elohim Echad", "Toda raba"], a: 1 },
+        { q: "Valor da letra ALEF (א)?", i: "✍️", o: ["10", "1", "100", "0"], a: 1 },
+        { q: "Cor do Céu (Azul) em Hebraico:", i: "💎", o: ["Adom", "Lavan", "Cachol", "Yarok"], a: 2 },
+        { q: "Como se diz 'Eu entendo'?", i: "💡", o: ["Ani lomed", "Ani mevin", "Ani gar", "Ani oved"], a: 1 },
+        { q: "Dia da semana: Domingo", i: "📅", o: ["Yom Shishi", "Yom Rishon", "Yom Shabbat", "Yom Sheni"], a: 1 },
+        { q: "Valor da letra YOD (י)?", i: "🤏", o: ["5", "20", "10", "1"], a: 2 },
+        
+        // 11-20 (Gramática e Vocabulário)
+        { q: "O que significa 'ERETZ'?", i: "🌍", o: ["Céu", "Mar", "Terra", "Fogo"], a: 2 },
+        { q: "Qual letra é um 'VAV' (ו)?", i: "📍", o: ["ז", "ו", "ן", "ך"], a: 1 },
+        { q: "Como se diz 'Bom Dia'?", i: "☀️", o: ["Erev Tov", "Laila Tov", "Boker Tov", "Shalom"], a: 2 },
+        { q: "Significado de 'ABBA':", i: "🧔", o: ["Mãe", "Irmão", "Pai", "Filho"], a: 2 },
+        { q: "Qual o valor da letra BET (ב)?", i: "🏠", o: ["1", "2", "3", "4"], a: 1 },
+        { q: "Como se diz 'Obrigado'?", i: "🙏", o: ["Bevakasha", "Slicha", "Toda", "Ken"], a: 2 },
+        { q: "Qual letra é usada no final das palavras (Sofit)?", i: "🔚", o: ["Mem", "Alef", "Bet", "Gimel"], a: 0 },
+        { q: "O que é 'MAYIM'?", i: "💧", o: ["Vinho", "Azeite", "Água", "Leite"], a: 2 },
+        { q: "Como se diz 'Sim'?", i: "✅", o: ["Lo", "Ken", "Slicha", "Lama"], a: 1 },
+        { q: "Significado de 'SHAVUA':", i: "📆", o: ["Mês", "Ano", "Dia", "Semana"], a: 3 },
+
+        // 21-30 (Frases e Verbos)
+        { q: "'ANI GAR' significa:", i: "🏠", o: ["Eu estudo", "Eu moro", "Eu trabalho", "Eu falo"], a: 1 },
+        { q: "Como pergunta 'Onde'?", i: "📍", o: ["Mati", "Eifo", "Lama", "Mi"], a: 1 },
+        { q: "'LECHEM' é o mesmo que:", i: "🍞", o: ["Peixe", "Pão", "Carne", "Fruta"], a: 1 },
+        { q: "O número 1 em Hebraico:", i: "☝️", o: ["Sheni", "Echad", "Shalosh", "Arba"], a: 1 },
+        { q: "A cor 'LAVAN' é:", i: "⚪", o: ["Preto", "Vermelho", "Branco", "Azul"], a: 2 },
+        { q: "O que significa 'SHEM'?", i: "📛", o: ["Lugar", "Nome", "Caminho", "Vida"], a: 1 },
+        { q: "Como se diz 'Escute' (Imperativo)?", i: "👂", o: ["Mevin", "Shema", "Lomed", "Oved"], a: 1 },
+        { q: "'MALACH' (com Alef) é:", i: "😇", o: ["Rei", "Anjo", "Sal", "Luz"], a: 1 },
+        { q: "A letra 'SHIN' (ש) tem som de:", i: "🐍", o: ["S ou SH", "B ou V", "K ou KH", "T ou D"], a: 0 },
+        { q: "Valor da letra GIMEL (ג)?", i: "🔢", o: ["1", "2", "3", "4"], a: 2 },
+
+        // 31-40 (Desafios Finais)
+        { q: "O que é 'OR'?", i: "✨", o: ["Trevas", "Luz", "Som", "Vento"], a: 1 },
+        { q: "Como se diz 'Mãe'?", i: "👩", o: ["Abba", "Imma", "Ach", "Bat"], a: 1 },
+        { q: "O número 10:", i: "🔟", o: ["Eshre", "Esser", "Meah", "Elef"], a: 1 },
+        { q: "Qual letra vale 5?", i: "🖐️", o: ["He (ה)", "Vav (ו)", "Zayin (ז)", "Dalet (ד)"], a: 0 },
+        { q: "O que significa 'ADONAI'?", i: "🛐", o: ["Meu Rei", "Meu Senhor", "Meu Pai", "Meu Juiz"], a: 1 },
+        { q: "Como se diz 'Paz'?", i: "🕊️", o: ["Slicha", "Shalom", "Toda", "Bevakasha"], a: 1 },
+        { q: "'ISHA' significa:", i: "💃", o: ["Homem", "Criança", "Mulher", "Anjo"], a: 2 },
+        { q: "Qual o valor de TAV (ת)?", i: "📏", o: ["100", "200", "300", "400"], a: 3 },
+        { q: "'YESH' significa:", i: "📦", o: ["Não há", "Tem / Há", "Talvez", "Nunca"], a: 1 },
+        { q: "A última letra do Alfabeto:", i: "🏁", o: ["Shin", "Resh", "Tav", "Zayin"], a: 2 }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        const item = bancoDeDados[currentIdx];
+        document.getElementById('current-q').innerText = currentIdx + 1;
+        document.getElementById('icon').innerText = item.i;
+        document.getElementById('pergunta').innerText = item.q;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('btn-next').style.display = "none";
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = "";
+        
+        item.o.forEach((opt, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'opt';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(index);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(idx) {
+        const card = document.getElementById('card');
+        const feed = document.getElementById('feedback');
+        
+        if(idx === bancoDeDados[currentIdx].a) {
+            feed.innerText = "⭐ EXCELENTE! ⭐";
+            feed.style.color = "var(--success)";
+            score += 100;
+            document.getElementById('score').innerText = score;
+            document.getElementById('btn-next').style.display = "block";
+            // Desabilita cliques após acertar
+            const opts = document.querySelectorAll('.opt');
+            opts.forEach(o => o.style.pointerEvents = "none");
+        } else {
+            feed.innerText = "Tente de novo!";
+            feed.style.color = "var(--error)";
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 400);
+        }
+    }
+
+    function loadNext() {
+        currentIdx++;
+        if(currentIdx < bancoDeDados.length) {
+            loadQuestion();
+        } else {
+            document.getElementById('game-ui').style.display = "none";
+            document.getElementById('final-screen').style.display = "block";
+        }
+    }
+
+    loadQuestion();
+</script>
+</body>
+</html>

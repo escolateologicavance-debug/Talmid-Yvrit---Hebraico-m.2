@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <title>Módulo 9 - Avaliação Oficial</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; --success: #27ae60; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        body { font-family: 'Alef', sans-serif; background: var(--bg); color: var(--text); padding: 15px; line-height: 1.6; }
+
+        header { 
+            background: white; padding: 20px; border: 2px solid var(--primary); 
+            border-radius: 12px; margin-bottom: 25px; border-left: 8px solid var(--gold); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        header h1 { font-size: 1.3rem; color: var(--primary); text-transform: uppercase; text-align: center; margin-bottom: 15px; }
+        
+        .info-header { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+        .info-item { display: flex; align-items: center; font-weight: bold; font-size: 0.9rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .info-item input[type="text"] { border: none; outline: none; margin-left: 8px; flex: 1; font-family: 'Alef'; font-size: 1rem; color: #2980b9; background: transparent; min-width: 0; }
+
+        .questoes-container { max-width: 800px; margin: 0 auto; }
+        .pergunta-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .header-q { display: flex; align-items: flex-start; margin-bottom: 15px; }
+        .num-q { background: var(--primary); color: white; padding: 4px 10px; border-radius: 6px; margin-right: 12px; font-weight: bold; }
+        .texto-q { font-weight: bold; font-size: 1.05rem; flex: 1; }
+
+        .opcoes { margin-top: 10px; }
+        .opcao-item { display: flex; align-items: center; padding: 14px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 10px; cursor: pointer; transition: 0.2s; background: #fff; }
+        .opcao-item:hover { background: #f8fbff; border-color: #3498db; }
+        input[type="radio"] { margin-right: 12px; transform: scale(1.4); cursor: pointer; }
+
+        .btn-finalizar { background: var(--primary); color: white; padding: 22px; width: 100%; border: none; border-radius: 15px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin: 30px 0 60px; border-bottom: 6px solid #000; }
+        .btn-finalizar:active { transform: translateY(3px); border-bottom-width: 3px; }
+        
+        #resultado { display: none; padding: 30px; border-radius: 15px; text-align: center; margin: 20px 0; font-weight: bold; }
+        .aprovado { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .reprovado { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        #btn-modulo-10 { display: none; background: var(--success); color: white; padding: 25px; text-decoration: none; border-radius: 15px; font-weight: bold; text-align: center; font-size: 1.4rem; margin-bottom: 100px; border-bottom: 6px solid #196f3d; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>TalmidYvrit - Médio</h1>
+    <div class="info-header">
+        <div class="info-item">Shem (nome): <input type="text" id="nome-aluno" placeholder="Digite aqui..."></div>
+        <div class="info-item">Yom (dia): <span id="data-atual" style="margin-left:8px; color:#2980b9"></span></div>
+        <div class="info-item">Beseder: <span style="margin-left:8px"> ( ) Sim ( ) Não</span></div>
+        <div class="info-item" style="color:var(--gold)">Média Necessária: 7.0</div>
+    </div>
+</header>
+
+<div class="questoes-container" id="quiz"></div>
+
+<button class="btn-finalizar" id="btn-submit" onclick="corrigir()">FINALIZAR AVALIAÇÃO</button>
+
+<div id="resultado"></div>
+<a href="10.html" id="btn-modulo-10">MÓDULO 10 LIBERADO! ➔</a>
+
+<script>
+    const perguntas = [
+        { q: "Qual a tradução correta de 'Eretz Israel'?", o: ["Céu de Israel", "Povo de Israel", "Terra de Israel", "Rei de Israel"], a: 2 },
+        { q: "O valor numérico da palavra 'AHAVA' (Amor - אהבה) é:", o: ["13", "8", "26", "10"], a: 0 },
+        { q: "Como se diz 'Amanhã' em Hebraico?", o: ["Etmol", "Hayom", "Machar", "Achshav"], a: 2 },
+        { q: "Qual o plural de 'Yom' (Dia)?", o: ["Yomim", "Yamim", "Yomot", "Yamit"], a: 1 },
+        { q: "A cor 'Adom' refere-se a:", o: ["Verde", "Azul", "Preto", "Vermelho"], a: 3 },
+        { q: "Qual destas letras é uma 'Sofit' (Final)?", o: ["ג", "ף", "ד", "ט"], a: 1 },
+        { q: "O que significa 'Ma nishma'?", o: ["Qual seu nome?", "Onde você mora?", "Como vai?", "Que horas são?"], a: 2 },
+        { q: "O número 7 (Sheva) para substantivos masculinos é:", o: ["Sheva", "Shiv'ah", "Shemonah", "Sheshet"], a: 1 },
+        { q: "Como se diz 'Pão' em Hebraico?", o: ["Basar", "Mayim", "Lechem", "Yayin"], a: 2 },
+        { q: "Qual o valor da letra LAMED (ל)?", o: ["20", "30", "40", "50"], a: 1 },
+        { q: "O prefixo 'HA' (ה) em Hebraico funciona como:", o: ["Artigo Definido (O/A)", "Conjunção (E)", "Preposição", "Pronome"], a: 0 },
+        { q: "O que significa 'Mevin'?", o: ["Escreve", "Lê", "Entende", "Mora"], a: 2 },
+        { q: "A expressão 'Bevakasha' significa:", o: ["Obrigado", "Por favor", "Com licença", "Perdão"], a: 1 },
+        { q: "Qual a letra que vale 400?", o: ["Resh", "Shin", "Tav", "Qof"], a: 2 },
+        { q: "O termo 'Ruach' pode significar:", o: ["Fogo", "Terra", "Espírito / Vento", "Água"], a: 2 },
+        { q: "Como se diz 'Filho' em Hebraico?", o: ["Bat", "Ben", "Ish", "Abba"], a: 1 },
+        { q: "O que significa 'Shavua Tov'?", o: ["Boa Noite", "Boa Semana", "Bom Mês", "Bom Ano"], a: 1 },
+        { q: "Qual cor é 'Yarok'?", o: ["Amarelo", "Cinza", "Verde", "Marrom"], a: 2 },
+        { q: "O valor da letra 'VAV' (ו) é:", o: ["5", "6", "7", "8"], a: 1 },
+        { q: "Como se diz 'Escritura' (Palavra Escrita)?", o: ["Katuv", "Davar", "Mila", "Shem"], a: 0 },
+        { q: "A palavra 'Melech' significa:", o: ["Profeta", "Sacerdote", "Rei", "Juiz"], a: 2 },
+        { q: "O que é 'Ayin'?", o: ["Orelha", "Mão", "Olho", "Pé"], a: 2 },
+        { q: "Qual o significado de 'Kadosh'?", o: ["Grande", "Forte", "Santo", "Eterno"], a: 2 },
+        { q: "Como se diz 'Mulher'?", o: ["Ish", "Isha", "Yeled", "Yalda"], a: 1 },
+        { q: "O número 2 em Hebraico (Masc) é:", o: ["Echad", "Shnayim", "Shlosha", "Arba"], a: 1 },
+        { q: "O que significa 'Elohim Echad'?", o: ["Deus é Grande", "Deus é Santo", "Deus é Um", "Deus é Pai"], a: 2 },
+        { q: "Qual o valor da letra 'CHET' (ח)?", o: ["5", "8", "10", "20"], a: 1 },
+        { q: "A palavra 'Mishpacha' significa:", o: ["Cidade", "Família", "Igreja", "Escola"], a: 1 },
+        { q: "Como se diz 'Onde'?", o: ["Mati", "Eifo", "Lama", "Mi"], a: 1 },
+        { q: "A última letra do alfabeto hebraico é:", o: ["Shin", "Resh", "Tav", "Samech"], a: 2 }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz');
+        perguntas.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'pergunta-card';
+            card.innerHTML = `<div class="header-q"><span class="num-q">${index + 1}</span><div class="texto-q">${item.q}</div></div><div class="opcoes">${item.o.map((opt, i) => `<label class="opcao-item"><input type="radio" name="q${index}" value="${i}"> <span>${opt}</span></label>`).join('')}</div>`;
+            container.appendChild(card);
+        });
+        document.getElementById('data-atual').innerText = new Date().toLocaleDateString('pt-BR');
+    }
+
+    function corrigir() {
+        let acertos = 0;
+        perguntas.forEach((item, index) => {
+            const sel = document.querySelector(`input[name="q${index}"]:checked`);
+            if (sel && parseInt(sel.value) === item.a) acertos++;
+        });
+
+        const nota = (acertos / perguntas.length) * 10;
+        const res = document.getElementById('resultado');
+        const next = document.getElementById('btn-modulo-10');
+        const submit = document.getElementById('btn-submit');
+        
+        res.style.display = "block";
+        if (nota >= 7) {
+            res.className = "aprovado";
+            res.innerHTML = `<h2>APROVADO!</h2><p>Sua nota: ${nota.toFixed(1)} | Acertos: ${acertos}/30</p>`;
+            next.style.display = "block";
+            submit.style.display = "none";
+        } else {
+            res.className = "reprovado";
+            res.innerHTML = `<h2>REPROVADO</h2><p>Nota: ${nota.toFixed(1)} | Mínimo: 7.0</p>`;
+        }
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    renderQuiz();
+</script>
+</body>
+</html>
