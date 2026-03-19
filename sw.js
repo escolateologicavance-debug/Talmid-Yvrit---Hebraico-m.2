@@ -13,8 +13,8 @@ const ASSETS = [
   './7.html',
   './8.html',
    './9.html',
-   './10.html',
-   './prateleira.html',
+   './10.html'
+   './prateleira.html'
   './logo-192.png',
   './logo-512.png',
   './1-img.png',
