@@ -9,7 +9,6 @@
         :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --text: #2c3e50; }
         body { font-family: 'Segoe UI', 'Alef', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--text); }
         
-        /* Cabeçalho Institucional */
         header { 
             background: var(--primary); color: white; padding: 30px 20px; 
             text-align: center; border-bottom: 5px solid var(--gold); 
@@ -22,7 +21,6 @@
         
         h3 { border-left: 4px solid var(--primary); padding-left: 10px; margin: 25px 0 15px; color: var(--primary); }
 
-        /* Estilo do Catálogo */
         .catalogo-grid { display: flex; flex-direction: column; gap: 12px; }
         
         .item-link { 
@@ -35,7 +33,6 @@
         .item-link:active { transform: scale(0.98); background: #fdfdfd; border-color: var(--gold); }
         .item-link i { margin-right: 15px; font-style: normal; font-size: 1.2rem; }
 
-        /* Rodapé de Registro */
         footer { text-align: center; font-size: 0.8rem; color: #7f8c8d; margin-top: 40px; padding: 20px; border-top: 1px solid #ddd; }
     </style>
 </head>
@@ -54,15 +51,15 @@
     <h3>Catálogo de Módulos</h3>
     
     <nav class="catalogo-grid">
-        <a href="2.html" class="item-link"><i>📘</i> Por que estudar Hebraico?</a>
+        <a href="2.html" class="item-link"><i>📗</i> Por que estudar Hebraico?</a>
         <a href="3.html" class="item-link"><i>📜</i> A Regra do Tetragrama Sagrado</a>
         <a href="4.html" class="item-link"><i>✍️</i> Gramática</a>
         <a href="5.html" class="item-link"><i>🗣️</i> Verbo</a>
         <a href="6.html" class="item-link"><i>🔢</i> Números</a>
         <a href="7.html" class="item-link"><i>💬</i> Diálogo</a>
         <a href="8.html" class="item-link"><i>📝</i> Exercícios</a>
-        <a href="9.html" class="item-link" style="color: var(--gold);"><i>ðŸŽ“</i> Talmid Yvrit - Médio</a>
         <a href="quiz.html" class="item-link" style="color: var(--gold);"><i>🎓</i> Quiz Avaliativo</a>
+        <a href="9.html" class="item-link"><i>💎</i> Talmid Yvrit - Médio</a>
         <a href="10.html" class="item-link"><i>💳</i> Créditos</a>
         <a href="prateleira.html" class="item-link"><i>📚</i> Prateleira Digital</a>
     </nav>
@@ -74,7 +71,6 @@
 </div>
 
 <script>
-    // Registro do Service Worker para permitir instalação via Catálogo
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js');
     }
