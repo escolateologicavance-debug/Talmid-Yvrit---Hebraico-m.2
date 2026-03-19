@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Prateleira Digital - Gilberto Moreira</title>
+    <style>
+        :root { --primary: #1a2a3a; --gold: #f39c12; --bg: #f4f7f6; --white: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--primary); padding: 20px; line-height: 1.6; }
+
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--gold); padding-bottom: 15px; }
+        h1 { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary); letter-spacing: 2px; }
+        .autor { font-size: 1.1rem; font-weight: bold; color: var(--gold); margin-top: 5px; }
+
+        h2 { font-size: 1rem; color: var(--gold); text-transform: uppercase; margin: 25px 0 10px 5px; border-left: 4px solid var(--primary); padding-left: 10px; }
+
+        .prateleira { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .app-card {
+            background: var(--white);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+        }
+
+        .app-card span { font-weight: bold; font-size: 0.85rem; color: #34495e; }
+
+        .vendas-box {
+            background: var(--primary);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .whatsapp { font-size: 1.3rem; font-weight: bold; color: var(--gold); text-decoration: none; display: block; margin: 10px 0; }
+        .slogan { font-style: italic; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        .u-lowercase { text-transform: none; }
+
+        .btn-voltar {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin: 25px 0;
+            background: #cbd5e0;
+            color: #2d3748;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .footer-info { text-align: center; font-size: 0.8rem; opacity: 0.7; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PRATELEIRA DIGITAL</h1>
+    <div class="autor">Gilberto Moreira</div>
+</header>
+
+<h2>Formação Teológica</h2>
+<div class="prateleira">
+    <div class="app-card"><span>Básico em Teologia</span></div>
+    <div class="app-card"><span>Médio em Teologia</span></div>
+    <div class="app-card"><span>Intermediário Teologia</span></div>
+    <div class="app-card"><span>Avançado em Teologia</span></div>
+    <div class="app-card"><span>Escatologia Pré-Tribulacionista</span></div>
+</div>
+
+<h2>Escola de Hebraico</h2>
+<div class="prateleira">
+    <div class="app-card"><span>Talmid Alfabetização</span></div>
+    <div class="app-card"><span>Médio de Hebraico M.2</span></div>
+    <div class="app-card"><span>App Curso de Hebraico</span></div>
+    <div class="app-card"><span>Laboratório Hebraico</span></div>
+</div>
+
+<h2>Ministérios e Liderança</h2>
+<div class="prateleira">
+    <div class="app-card"><span>Liderança Cristã</span></div>
+    <div class="app-card"><span>Formação de Diáconos</span></div>
+    <div class="app-card"><span>Curso Presbítero</span></div>
+    <div class="app-card"><span>Capelania</span></div>
+    <div class="app-card"><span>Oratória Cristã</span></div>
+</div>
+
+<h2>Gestão e Terapia</h2>
+<div class="prateleira">
+    <div class="app-card"><span>Terapeuta Digital</span></div>
+    <div class="app-card"><span>Gestão Emocional SINCRO</span></div>
+    <div class="app-card"><span>Sincroterapia</span></div>
+    <div class="app-card"><span>Estrela Guia (Família M2)</span></div>
+    <div class="app-card"><span>Seminário Família Firme</span></div>
+</div>
+
+<h2>Ferramentas e Estudos</h2>
+<div class="prateleira">
+    <div class="app-card"><span>Beduíno</span></div>
+    <div class="app-card"><span>Beduíno Quiz</span></div>
+    <div class="app-card"><span>Lapada Diária</span></div>
+    <div class="app-card"><span>Relógio de Deus</span></div>
+    <div class="app-card"><span>Seminário HAZAQ</span></div>
+    <div class="app-card"><span>Seminário de Missões</span></div>
+    <div class="app-card"><span>Geração Inabalável</span></div>
+    <div class="app-card"><span>Mulher de Valor</span></div>
+</div>
+
+<div class="vendas-box">
+    <p>Adquira todos esses Aplicativos pelo WhatsApp:</p>
+    <a href="https://wa.me/5566984666186" class="whatsapp">66 98466 6186</a>
+    <p><strong>Gilberto Moreira</strong></p>
+    <p>AVANCE</p>
+    <div class="slogan">"<span class="u-lowercase">u</span>ltrapassando limites!"</div>
+</div>
+
+<a href="index.html" class="btn-voltar">Tecla voltar ao Início</a>
+
+<div class="footer-info">
+    Made in Brasil
+</div>
+
+</body>
+</html>
