@@ -1,8 +1,8 @@
-const CACHE_NAME = 'talmid-medio-v1';
+const CACHE_NAME = 'talmid-medio-v2'; // Atualizei a versão para forçar o navegador a ler as mudanças
 
-// Lista de ativos para cache inicial
+// Lista completa de ativos baseada no seu 1.html e na estrutura do projeto
 const ASSETS = [
-  './',               // Essencial para validar o start_url: "./"
+  './',               
   './index.html',
   './1.html',
   './2.html',
@@ -12,9 +12,12 @@ const ASSETS = [
   './6.html',
   './7.html',
   './8.html',
-   './9.html',
-   './10.html',
-   './prateleira.html',
+  './9.html',
+  './10.html',
+  './11.html',        
+  './quiz.html',      
+  './creditos.html',  
+  './prateleira.html'
   './logo-192.png',
   './logo-512.png',
   './1-img.png',
@@ -25,21 +28,24 @@ const ASSETS = [
   './6-img.png',
   './7-img.png',
   './8-img.png',
+  './7-img.html',     
+  './8-img.html',     
   './manifest.json',
-  'https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap' // Fonte dos títulos
 ];
 
-// Instalação: Salva os arquivos no cache do navegador
+// Instalação: Salva os arquivos no cache
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Talmid: Arquivos validados e cacheados');
+      console.log('Talmid Yvrit: Cache atualizado com sucesso');
       return cache.addAll(ASSETS);
     })
   );
 });
 
-// Ativação: Remove versões antigas do cache para evitar conflitos
+// Ativação: Limpa o cache antigo (v1) e assume a v2
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -50,7 +56,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Estratégia de Busca: Tenta o Cache primeiro, se não tiver, busca na rede
+// Estratégia: Cache primeiro, depois Rede
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
